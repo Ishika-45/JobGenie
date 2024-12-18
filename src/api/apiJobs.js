@@ -95,10 +95,10 @@ export async function addNewJob(token, __, jobData) {
 
         const { data, error } = await supabase
         .from("jobs")
-        .insert({jobData})
+        .insert([jobData])
         .select();
 
-        if (error || data.length === 0) {
+        if (error) {
             console.error("Error Creating Job: ", error);
             return null;
         }
