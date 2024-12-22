@@ -3,10 +3,10 @@ import supabaseClient, { supabaseUrl } from "@/utils/supabase";
 export async function applyToJob(token, _, jobData) {
     const supabase = await supabaseClient(token);
 
-    if (!supabase) {
-        console.error("Supabase client initialization failed.");
-        return null;
-    }
+    // if (!supabase) {
+    //     console.error("Supabase client initialization failed.");
+    //     return null;
+    // }
 
     const random = Math.floor(Math.random() * 90000);
     const fileName = `resume-${random}-${jobData.candidate_id}`;
@@ -14,7 +14,7 @@ export async function applyToJob(token, _, jobData) {
     // Attempt to upload the resume
     const { error: storageError } = await supabase
         .storage.from("resumes")
-        .upload(fileName, jobData.resume);
+        .upload(fileName, jobData.resume); 
 
     if (storageError) {
         console.error("Error Uploading Resume: ", storageError);
@@ -23,8 +23,8 @@ export async function applyToJob(token, _, jobData) {
 
     const resume = `${supabaseUrl}/storage/v1/object/public/resumes/${fileName}`;
 
-    // Debugging log to verify the data being inserted
-    console.log("Inserting the following job data:", { ...jobData, resume });
+    // // Debugging log to verify the data being inserted
+    // console.log("Inserting the following job data:", { ...jobData, resume });
 
     // Attempt to insert application data
     const { data, error } = await supabase

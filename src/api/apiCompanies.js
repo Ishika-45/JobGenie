@@ -19,15 +19,15 @@ export async function addNewCompany(token,_,companyData) {
     const supabase = await supabaseClient(token);
 
     const random = Math.floor(Math.random() * 90000);
-        const fileName = `logo-${random}-${companyData.name}`;
+    const fileName = `logo-${random}-${companyData.name}`;
     
         // Attempt to upload the resume
-        const { error: storageError } = await supabase
-            .storage.from("company-logo  ")
+        const { error: storageError } = await supabase.storage
+            .from("company-logo  ")
             .upload(fileName, companyData.logo);
     
         if (storageError) {
-            console.error("Error Uploading Company Logo: ", error);
+            console.error("Error Uploading Company Logo: ", storageError);
             return null;
         }
     
@@ -44,7 +44,7 @@ export async function addNewCompany(token,_,companyData) {
         if (error) {
             console.error("Error Submitting Companies: ", error);
             return null;
-        }
+        }  
         return data;
 
 }
