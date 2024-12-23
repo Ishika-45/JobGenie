@@ -3,10 +3,10 @@ import supabaseClient, { supabaseUrl } from "@/utils/supabase";
 export async function applyToJob(token, _, jobData) {
     const supabase = await supabaseClient(token);
 
-    // if (!supabase) {
-    //     console.error("Supabase client initialization failed.");
-    //     return null;
-    // }
+    if (!supabase) {
+        console.error("Supabase client initialization failed.");
+        return null;
+    }
 
     const random = Math.floor(Math.random() * 90000);
     const fileName = `resume-${random}-${jobData.candidate_id}`;
