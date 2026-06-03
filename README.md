@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="./assets/banner.png" alt="JobGenie Banner" width="100%"/>
+<img src="./assets/Banner.png" alt="JobGenie Banner" width="100%"/>
 
 ### 💼 AI-Powered Recruitment Platform
 
