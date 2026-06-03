@@ -95,7 +95,7 @@ Excellent Match 🚀
 
 ### Job Listings
 
-![Job Listings](./assets/jobs-page.png)
+![Job Listings](./assets/jobs-page.jpeg)
 
 ### Recruiter Dashboard
 
