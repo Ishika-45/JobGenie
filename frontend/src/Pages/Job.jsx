@@ -106,17 +106,23 @@ const JobPage = () => {
       applied = {job?.applications?.find((ap) => ap.candidate_id === user.id)}
       />)}
 
-      {job?.applications?.length > 0 && job?.recruiter_id === user?.id && (
-        <div className='flex flex-col gap-2'>
-          <h2 className = 'text-2xl sm:text-3xl font-bold'>
-            Applications
-          </h2>
-          {job?.applications.map((application) => {
-            return <ApplicationCard key = {application.id} application={application}/>
-          })}
+      {job?.recruiter_id === user?.id && job?.applications?.length > 0 && (
+  <div className="mt-8">
+    <h2 className="text-2xl font-bold mb-4">
+      🚀 Applicants (AI Ranked)
+    </h2>
 
-          </div>
-      )}
+    {[...job.applications]
+      .sort((a, b) => (b.ai_score || 0) - (a.ai_score || 0))
+      .map((application, index) => (
+        <ApplicationCard
+          key={application.id}
+          application={application}
+          rank={index + 1}
+        />
+      ))}
+  </div>
+)}
     </div>
   )
 }

@@ -74,36 +74,44 @@ export async function getSingleJob(token, {job_id}) {
         return data;
 }
 
-export async function updateHiringStatus(token, {job_id}, isOpen) {
+export async function updateHiringStatus(token, { job_id }, isOpen) {
     const supabase = await supabaseClient(token);
 
-        const { data, error } = await supabase
+    const { data, error } = await supabase
         .from("jobs")
-        .update({isOpen})
-        .eq("id",job_id)
+        .update({ isopen: isOpen }) // ✅ FIX
+        .eq("id", job_id)
         .select();
 
-        if (error) {
-            console.error("Error Updating Job: ", error);
-            return null;
-        }
-        return data;
+    if (error) {
+        console.error("Error Updating Job: ", error);
+        return null;
+    }
+
+    return data;
 }
 
 export async function addNewJob(token, __, jobData) {
     const supabase = await supabaseClient(token);
 
-        const { data, error } = await supabase
+    const formattedJobData = {
+        ...jobData,
+        isopen: jobData.isOpen ?? true, // ✅ FIX
+    };
+
+    delete formattedJobData.isOpen; // ❌ remove wrong key
+
+    const { data, error } = await supabase
         .from("jobs")
-        .insert([jobData])
+        .insert([formattedJobData])
         .select();
 
-        if (error) {
-            console.error("Error Creating Job: ", error);
-            return null;
-        }
-        return data;
+    if (error) {
+        console.error("Error Creating Job: ", error);
+        return null;
+    }
 
+    return data;
 }
 
 export async function getSavedJobs(token) {
